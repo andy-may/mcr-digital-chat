@@ -20,6 +20,8 @@
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 
+    <link rel="icon shortcut" type="image/x-icon" href="/favicon.ico">
+
     <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -34,48 +36,61 @@
 <body>
 
 <!-- Build your app here-->
-<h2>Hello <span id="my-name">World</span>!</h2>
-
-<button id="change-name" onclick="enterMyName()">Enter name</button>
-<button id="change-colour" onclick="changeNameColour()">Enter colour</button>
-<button id="learn-more" class="btn btn-success btn-lg" type="button">Learn More!</button>
-
-<div>
-    <input type="textfield" id="simple-comment"></input>
-    <button id="simple-send">Post comment</button>
+<div class="form-inline">
+    <div class="form-group">
+        <label for="name">Display Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Jane Doe">
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment" class="form-control" placeholder="comment goes here" >
+    </div>
+    <button id="addComment" class="btn btn-default">Post comment</button>
 </div>
-<div class="col-md-8 col-md-offset-2">
-    <h2>Simple Comments</h2>
-    <div id="simple-comments">
-        <ul>
+
+<iframe width="688" height="390"src="https://www.youtube.com/embed/g3FOQjCgl9w?controls=1"></iframe>
+
+<div class="row">
+
+    <hr>
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <h2>Comments</h2>
+            <div id="comments">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <ul id="messages">
         </ul>
     </div>
+
 </div>
 
 <script>
 
-    function enterMyName() {
-        var person = prompt("Please enter your name", "Batman");
-        if (person != null) {
-            document.getElementById("my-name").innerHTML = person;
-        }
+    function addComment(name, comment){
+        var date = new Date();
+
+        var html = '<div class="comment row">' +
+            '<div class="commentator col-xs-7"> ' + name + ' says: </div>' +
+            '<div class="col-xs-12 commentText">' + comment + '</div>' +
+            '<div class="col-xs-12 commentDate">' + date.toLocaleDateString() + '</div>' +
+            '<hr class="col-xs-12" >'+
+            '</div>';
+
+        $(html).hide().appendTo("#comments").fadeIn(400);
+        $("#name").val('');
+        $("#comment").val('');
+        name = '';
+        comment = '';
     }
 
-    function changeNameColour() {
-        var colour = prompt("Please enter your favourite colour", "Pink");
-        if (colour != null) {
-            document.getElementById("my-name").style.color = colour;
-        }
-    }
-
-    $('#learn-more').click(function() {
-        alert('Learn more about what?');
-    });
-
-    $("#simple-send").on("click", function() {
-        var html = "<li>" + $("#simple-comment").val() + "</li>";
-        $("#simple-comments ul").append(html);
-        $("#simple-comment").val("");
+    $("#addComment").click(function(){
+        var name = $("#name").val();
+        var comment = $("#comment").val();
+        addComment(name, comment);
     });
 
 </script>
