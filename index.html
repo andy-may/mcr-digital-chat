@@ -34,5 +34,26 @@
 <!-- Build your app here-->
 <h2>Hello <span id="my-name">World</span>!</h2>
 
+<button id="change-name" onclick="enterMyName()">Enter name</button>
+<button id="change-colour" onclick="changeNameColour()">Enter colour</button>
+
+<script>
+
+    function enterMyName() {
+        var person = prompt("Please enter your name", "Batman");
+        if (person != null) {
+            document.getElementById("my-name").innerHTML = person;
+        }
+    }
+
+    function changeNameColour() {
+        var colour = prompt("Please enter your favourite colour", "Pink");
+        if (colour != null) {
+            document.getElementById("my-name").style.color = colour;
+        }
+    }
+
+</script>
+
 </body>
 </html>
