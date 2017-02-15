@@ -22,6 +22,10 @@
 
     <link rel="icon shortcut" type="image/x-icon" href="/favicon.ico">
 
+    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/simplechat.js"></script>
+
     <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -32,66 +36,79 @@
           href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="styles/main.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .top-buffer { margin-top:20px; }
+    </style>
 </head>
 <body>
-
-<!-- Build your app here-->
-<div class="form-inline">
-    <div class="form-group">
-        <label for="name">Display Name:</label>
-        <input type="text" class="form-control" id="name" placeholder="Jane Doe">
-    </div>
-    <div class="form-group">
-        <label for="comment">Comment:</label>
-        <input type="text" id="comment" class="form-control" placeholder="comment goes here" >
-    </div>
-    <button id="addComment" class="btn btn-default">Post comment</button>
+<div class="jumbotron bg-info">
+    <h1>Film reviews board</h1>
 </div>
+<div class="container">
 
-<iframe width="688" height="390"src="https://www.youtube.com/embed/g3FOQjCgl9w?controls=1"></iframe>
-
-<div class="row">
-
-    <hr>
-    <div class="col-md-12">
-        <div class="col-md-8">
-            <h2>Comments</h2>
-            <div id="comments">
+    <!-- Build your app here-->
+    <div class="row top-buffer">
+        <div class="form-inline col-xs-10">
+            <div class="form-group">
+                <label for="name">Display Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Jane Doe">
             </div>
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <input type="text" id="comment" class="form-control" placeholder="comment goes here" >
+            </div>
+            <button id="addComment" class="btn btn-default">Post comment</button>
+        </div>
+        <div class="form-group col-xs-2 signinout">
+            <button type="button" class="btn btn-primary" id="signin">Sign in</button>
+            <button type="button" class="btn btn-warning" id="signout">Sign out</button>
         </div>
     </div>
 
-    <div>
-        <ul id="messages">
-        </ul>
+    <div class="row well top-buffer">
+        <iframe width="688" height="390"src="https://www.youtube.com/embed/g3FOQjCgl9w?controls=1"></iframe>
     </div>
 
+    <div class="row top-buffer">
+
+        <hr>
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <h2>Comments</h2>
+                <div id="comments">
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <ul id="messages">
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="row messages">
+
+    </div>
 </div>
 
 <script>
 
-    function addComment(name, comment){
-        var date = new Date();
+    var chat = new Chat();
 
-        var html = '<div class="comment row">' +
-            '<div class="commentator col-xs-7"> ' + name + ' says: </div>' +
-            '<div class="col-xs-12 commentText">' + comment + '</div>' +
-            '<div class="col-xs-12 commentDate">' + date.toLocaleDateString() + '</div>' +
-            '<hr class="col-xs-12" >'+
-            '</div>';
+    chat.setMessageInput($("#message"));
+    chat.setDisplayNameInput($("#name"));
+    chat.setSubmitButton($("#send"));
+    chat.setSignInButton($("#signin"));
+    chat.setSignOutButton($("#signout"));
+    chat.setMessageList($("#messages"));
 
-        $(html).hide().appendTo("#comments").fadeIn(400);
-        $("#name").val('');
-        $("#comment").val('');
-        name = '';
-        comment = '';
-    }
+    $("#send").on("click", function(){chat.sendMessage()});
+    $("#signin").on("click", function(){chat.signIn()});
+    $("#signout").on("click", function(){chat.signOut()});
 
-    $("#addComment").click(function(){
-        var name = $("#name").val();
-        var comment = $("#comment").val();
-        addComment(name, comment);
-    });
+    chat.listenForMessages();
 
 </script>
 
