@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Learn how to use the Firebase platform on the Web">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendly Chat</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+    <!-- App Styling -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Build your app here-->
+<h2>Hello <span id="my-name">World</span>!</h2>
+
+<button id="change-name" onclick="enterMyName()">Enter name</button>
+<button id="change-colour" onclick="changeNameColour()">Enter colour</button>
+<button id="learn-more" class="btn btn-success btn-lg" type="button">Learn More!</button>
+
+<div>
+    <input type="textfield" id="simple-comment"></input>
+    <button id="simple-send">Post comment</button>
+</div>
+<div class="col-md-8 col-md-offset-2">
+    <h2>Simple Comments</h2>
+    <div id="simple-comments">
+        <ul>
+        </ul>
+    </div>
+</div>
+
+<script>
+
+    function enterMyName() {
+        var person = prompt("Please enter your name", "Batman");
+        if (person != null) {
+            document.getElementById("my-name").innerHTML = person;
+        }
+    }
+
+    function changeNameColour() {
+        var colour = prompt("Please enter your favourite colour", "Pink");
+        if (colour != null) {
+            document.getElementById("my-name").style.color = colour;
+        }
+    }
+
+    $('#learn-more').click(function() {
+        alert('Learn more about what?');
+    });
+
+    $("#simple-send").on("click", function() {
+        var html = "<li>" + $("#simple-comment").val() + "</li>";
+        $("#simple-comments ul").append(html);
+        $("#simple-comment").val("");
+    });
+
+</script>
+
+</body>
+</html>
